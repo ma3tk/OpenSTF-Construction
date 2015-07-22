@@ -1,0 +1,26 @@
+[Unit]
+Description=STF nginx public load balancer
+After=docker.service
+Requires=docker.service
+ConditionPathExists=/srv/ssl/stf.example.org.crt
+ConditionPathExists=/srv/ssl/stf.example.org.key
+ConditionPathExists=/srv/ssl/dhparam.pem
+ConditionPathExists=/srv/nginx/nginx.conf
+
+[Service]
+EnvironmentFile=/etc/environment
+TimeoutStartSec=0
+Restart=always
+ExecStartPre=/usr/bin/docker pull nginx:1.7.10
+ExecStartPre=-/usr/bin/docker kill %p
+ExecStartPre=-/usr/bin/docker rm %p
+ExecStart=/usr/bin/docker run --rm \
+  --name %p \
+  --net host \
+  -v /srv/ssl/stf.example.org.crt:/etc/nginx/ssl/cert.pem:ro \
+  -v /srv/ssl/stf.example.org.key:/etc/nginx/ssl/cert.key:ro \
+  -v /srv/ssl/dhparam.pem:/etc/nginx/ssl/dhparam.pem:ro \
+  -v /srv/nginx/nginx.conf:/etc/nginx/nginx.conf:ro \
+  nginx:1.7.10 \
+  nginx
+ExecStop=/usr/bin/docker stop -t 2 %p
