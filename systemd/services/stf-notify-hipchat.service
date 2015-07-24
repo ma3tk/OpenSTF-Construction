@@ -16,5 +16,5 @@ ExecStart=/usr/bin/docker run --rm \
   -e "HIPCHAT_ROOM=YOUR_HIPCHAT_ROOM_HERE" \
   openstf/stf:latest \
   stf notify-hipchat \
-    --connect-sub tcp://appside.stf.example.org:7150
+    --connect-sub tcp://localhost:7150
 ExecStop=-/usr/bin/docker stop -t 10 %p

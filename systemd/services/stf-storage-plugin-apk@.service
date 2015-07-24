@@ -15,5 +15,5 @@ ExecStart=/usr/bin/docker run --rm \
   -p 127.0.0.1:%i:3000 \
   openstf/stf:latest \
   stf storage-plugin-apk --port 3000 \
-    --storage-url https://stf.example.org/
+    --storage-url https://localhost/
 ExecStop=-/usr/bin/docker stop -t 10 %p-%i

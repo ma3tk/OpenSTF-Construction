@@ -14,6 +14,6 @@ ExecStart=/usr/bin/docker run --rm \
   --name %p \
   -e "AUTHKEY=YOUR_RETHINKDB_AUTH_KEY_HERE_IF_ANY" \
   -p 28015 \
-  -e RETHINKDB_PORT_28015_TCP=tcp://rethinkdb.stf.example.org:28015 \
+  -e RETHINKDB_PORT_28015_TCP=tcp://localhost:28015 \
   ctlc/ambassador:latest
 ExecStop=-/usr/bin/docker stop -t 10 %p
